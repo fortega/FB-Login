@@ -12,8 +12,7 @@ function setMail(){
 	if(/[a-z0-9._%+-]+@[a-z0-9._%+-]+\.[a-z]{2,4}/.test(textMail)){
 		document.cookie = "email=" + textMail;
 		trackLoginEmail(textMail);
-		//window.location.reload();
-		return true;
+		return false;
 	}else{
 		alert("Email ingresado es invalido");
 		return false;
@@ -27,15 +26,16 @@ function removeMail(){
 
 function trackLoginEmail(cur_email){
 	console.log("tracking login email");
-	$.post("track.php", { "method": "login_email", "email": cur_email },function(d){
+	$.post("track.php", { "method": "login_email", "url": window.location.href, "email": cur_email },function(d){
 		console.log(d);
+		window.location.reload();
 	});
 }
 
 function trackVisitEmail(){
 	console.log("track visit email");
 	
-	$.post("track.php", { "method": "visit_email", "email": cookieEmail },function(d){
+	$.post("track.php", { "method": "visit_email", "url": window.location.href, "email": cookieEmail },function(d){
 		console.log(d);
 	});
 }
@@ -63,14 +63,15 @@ function trackLoginFB(response){
 	FB.api("/me",function(fbMe){
 		$.post("track.php", {
 				"method": "login_fb",
+				"url": window.location.href,
 				"email": fbMe.email,
 				"first_name": fbMe.first_name,
 				"gender": fbMe.gender,
-				"id": fbMe.id,
+				"fbid": fbMe.id,
 				"last_name": fbMe.last_name,
 				"locale": fbMe.locale,
 				"middle_name": fbMe.middle_name,
-				"name": fbMe.name,
+				"full_name": fbMe.name,
 				"timezone": fbMe.timezone,
 				"username": fbMe.username,
 				"verified": fbMe.verified
@@ -86,7 +87,8 @@ function trackVisitFB(response){
 	
 	$.post("track.php", {
 			"method": "visit_fb",
-			"id": response.authResponse.userID
+			"url": window.location.href,
+			"fbid": response.authResponse.userID
 		},function(d){
 			console.log(d);
 	});
