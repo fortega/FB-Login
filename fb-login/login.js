@@ -111,7 +111,7 @@ function setLoginVisible(show){
 		
 		trackNologin();
 	}else{
-		loginBlock.hide();
+		loginBlock.fadeOut();
 	}			
 }
 
