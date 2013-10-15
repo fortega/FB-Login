@@ -15,6 +15,13 @@
 		
 		$sql = null;
 		switch($data["method"]){
+			case "nologin":
+					$sql = "INSERT INTO nologin (gmt,agent,ip,url) VALUE (".
+						"current_timestamp,".
+						"'".addslashes($_SERVER['HTTP_USER_AGENT'])."',".
+						"'".addslashes($_SERVER['REMOTE_ADDR'])."',".
+						"'".$data["url"]."')";
+					break;
 			case "login_email":
 				$sql ="INSERT INTO email_login (gmt,agent,ip,url,email) VALUE (".
 						"current_timestamp,".

@@ -2,7 +2,7 @@
 	<head>
 		<title></title>
 		<script type="text/javascript" src="jquery-2.0.3.min.js"></script>
-		<script type="text/javascript" src="login.js"></script>
+		<script type="text/javascript" src="/fb-login/login.js"></script>
 		<style>
 			* {
 				margin: 0px;

@@ -25,18 +25,25 @@ function removeMail(){
 }
 
 function trackLoginEmail(cur_email){
-	//console.log("tracking login email");
-	$.post("track.php", { "method": "login_email", "url": window.location.href, "email": cur_email },function(d){
-		//console.log(d);
+	console.log("tracking login email");
+	$.post("/fb-login/track.php", { "method": "login_email", "url": window.location.href, "email": cur_email },function(d){
+		console.log(d);
 		window.location.reload();
 	});
 }
 
 function trackVisitEmail(){
-	//console.log("track visit email");
+	console.log("track visit email");
 	
-	$.post("track.php", { "method": "visit_email", "url": window.location.href, "email": cookieEmail },function(d){
-		//console.log(d);
+	$.post("/fb-login/track.php", { "method": "visit_email", "url": window.location.href, "email": cookieEmail },function(d){
+		console.log(d);
+	});
+}
+
+function trackNologin() {
+	console.log("track nologin");
+	$.post("/fb-login/track.php", { "method": "nologin", "url": window.location.href},function(d){
+		console.log(d);
 	});
 }
 
@@ -61,7 +68,7 @@ function fbLogout(){
 
 function trackLoginFB(response){
 	FB.api("/me",function(fbMe){
-		$.post("track.php", {
+		$.post("/fb-login/track.php", {
 				"method": "login_fb",
 				"url": window.location.href,
 				"email": fbMe.email,
@@ -77,20 +84,20 @@ function trackLoginFB(response){
 				"verified": fbMe.verified
 				
 			},function(d){
-				//console.log(d);
+				console.log(d);
 		});
 	});
 }
 			
 function trackVisitFB(response){
-	//console.log("tracking visit fb");
+	console.log("tracking visit fb");
 	
-	$.post("track.php", {
+	$.post("/fb-login/track.php", {
 			"method": "visit_fb",
 			"url": window.location.href,
 			"fbid": response.authResponse.userID
 		},function(d){
-			//console.log(d);
+			console.log(d);
 	});
 }
 
@@ -101,6 +108,8 @@ function setLoginVisible(show){
 	if(show){
 		mustTrack = true;
 		loginBlock.fadeIn();
+		
+		trackNologin();
 	}else{
 		loginBlock.hide();
 	}			
@@ -152,17 +161,11 @@ function checkLogin(response){
 
 function appendLoginDiv(){
 	if($("div#loginBlock").length == 0){
-		//console.log("Se agrega div de login");
+		console.log("Se agrega div de login");
 		var o = $("body");
-		o.append("<div id=\"loginBlock\">"
-				+ "<div>"
-					+ "Para mejorar su navegacion favor inicie sesion:<br />"
-					+ "<img src=\"fb-connect.png\" alt=\"fb-connect\" onclick=\"fbLogin()\" ><br />"
-					+ "o indiquenos su email:"
-					+ "<form onsubmit=\"return setMail()\"><input id=\"tbEmail\" type=\"text\" />"
-					+ "<input type=\"submit\" value=\"Ingresar\"\" ></form>"
-				+ "</div>"
-			+ "</div>");
+		$.get("/fb-login/loginBlock.html",function(d){
+			o.append(d);
+		});
 	}
 }
 
