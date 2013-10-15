@@ -4,6 +4,9 @@
 	if(isset($data["tipo"]) && isset($data["mes"]) && isset($data["ano"])){
 		$table = null;
 		switch($data["tipo"]){
+			case "nologin":
+				$table = "nologin";
+				break;
 			case "login_fb":
 				$table = "facebook_login";
 				break;
@@ -46,7 +49,7 @@
 	}
 ?><html>
 	<head>
-		<script type="text/javascript" src="jquery-2.0.3.min.js"></script>
+		<script type="text/javascript" src="/fb-login/jquery-2.0.3.min.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				var date = new Date();
@@ -62,6 +65,7 @@
 					<th>Tipo</th>
 					<td>
 						<select name="tipo">
+							<option value="nologin">No login</option>
 							<option value="login_fb">Login Facebook</option>
 							<option value="visit_fb">Visit Facebook</option>
 							<option value="login_email">Login Email</option>
