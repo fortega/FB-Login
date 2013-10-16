@@ -163,7 +163,7 @@ function appendLoginDiv(){
 	if($("div#loginBlock").length == 0){
 		//console.log("Se agrega div de login");
 		var o = $("body");
-		$.get("http://dev.monbube.com/fb-login/loginBlock.html",function(d){
+		$.get("http://dev.monbube.com/fb-login/loginBlock.php",function(d){
 			o.append(d);
 		});
 	}

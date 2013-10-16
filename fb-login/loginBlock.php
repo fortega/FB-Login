@@ -1,4 +1,6 @@
-<div id="loginBlock">
+<?php
+	header('Access-Control-Allow-Origin: *');
+?><div id="loginBlock">
 	<div>
 		Para mejorar su navegacion favor inicie sesion:<br />
 		<img src="/fb-login/fb-connect.png" alt="fb-connect" onclick="fbLogin()" ><br />

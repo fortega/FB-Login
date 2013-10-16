@@ -1,4 +1,4 @@
-<?php
+<?php header('Access-Control-Allow-Origin: *');
 	include_once 'Constants.php';
 	
 	function error($t){
