@@ -26,7 +26,7 @@ function removeMail(){
 
 function trackLoginEmail(cur_email){
 	//console.log("tracking login email");
-	$.post("/fb-login/track.php", { "method": "login_email", "url": window.location.href, "email": cur_email },function(d){
+	$.post("http://dev.monbube.com/fb-login/track.php", { "method": "login_email", "url": window.location.href, "email": cur_email },function(d){
 		//console.log(d);
 		window.location.reload();
 	});
@@ -35,14 +35,14 @@ function trackLoginEmail(cur_email){
 function trackVisitEmail(){
 	//console.log("track visit email");
 	
-	$.post("/fb-login/track.php", { "method": "visit_email", "url": window.location.href, "email": cookieEmail },function(d){
+	$.post("http://dev.monbube.com/fb-login/track.php", { "method": "visit_email", "url": window.location.href, "email": cookieEmail },function(d){
 		//console.log(d);
 	});
 }
 
 function trackNologin() {
 	//console.log("track nologin");
-	$.post("/fb-login/track.php", { "method": "nologin", "url": window.location.href},function(d){
+	$.post("http://dev.monbube.com/fb-login/track.php", { "method": "nologin", "url": window.location.href},function(d){
 		//console.log(d);
 	});
 }
@@ -68,7 +68,7 @@ function fbLogout(){
 
 function trackLoginFB(response){
 	FB.api("/me",function(fbMe){
-		$.post("/fb-login/track.php", {
+		$.post("http://dev.monbube.com/fb-login/track.php", {
 				"method": "login_fb",
 				"url": window.location.href,
 				"email": fbMe.email,
@@ -92,7 +92,7 @@ function trackLoginFB(response){
 function trackVisitFB(response){
 	//console.log("tracking visit fb");
 	
-	$.post("/fb-login/track.php", {
+	$.post("http://dev.monbube.com/fb-login/track.php", {
 			"method": "visit_fb",
 			"url": window.location.href,
 			"fbid": response.authResponse.userID
@@ -163,7 +163,7 @@ function appendLoginDiv(){
 	if($("div#loginBlock").length == 0){
 		//console.log("Se agrega div de login");
 		var o = $("body");
-		$.get("/fb-login/loginBlock.html",function(d){
+		$.get("http://dev.monbube.com/fb-login/loginBlock.html",function(d){
 			o.append(d);
 		});
 	}
