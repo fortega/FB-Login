@@ -1,6 +1,6 @@
 var cookieEmail = /email=[a-z0-9._%+-]+@[a-z0-9._%+-]+\.[a-z]{2,4}/.exec(document.cookie);
 var mustTrack = true;
-
+var baseURL = "http://dev.monbube.com";
 if(cookieEmail !== null){
 	cookieEmail = cookieEmail[0].replace("email=","");
 }
@@ -9,6 +9,7 @@ if(cookieEmail !== null){
 
 function setMail(){
 	var textMail = $("input#tbEmail").val();
+	var textNombre = $("input#tbNombre").val();
 	if(/[a-z0-9._%+-]+@[a-z0-9._%+-]+\.[a-z]{2,4}/.test(textMail)){
 		document.cookie = "email=" + textMail;
 		trackLoginEmail(textMail);
@@ -26,7 +27,7 @@ function removeMail(){
 
 function trackLoginEmail(cur_email){
 	//console.log("tracking login email");
-	$.post("http://dev.monbube.com/fb-login/track.php", { "method": "login_email", "url": window.location.href, "email": cur_email },function(d){
+	$.post(baseURL + "/fb-login/track.php", { "method": "login_email", "url": window.location.href, "email": cur_email },function(d){
 		//console.log(d);
 		window.location.reload();
 	});
@@ -35,14 +36,14 @@ function trackLoginEmail(cur_email){
 function trackVisitEmail(){
 	//console.log("track visit email");
 	
-	$.post("http://dev.monbube.com/fb-login/track.php", { "method": "visit_email", "url": window.location.href, "email": cookieEmail },function(d){
+	$.post(baseURL + "/fb-login/track.php", { "method": "visit_email", "url": window.location.href, "email": cookieEmail },function(d){
 		//console.log(d);
 	});
 }
 
 function trackNologin() {
 	//console.log("track nologin");
-	$.post("http://dev.monbube.com/fb-login/track.php", { "method": "nologin", "url": window.location.href},function(d){
+	$.post(baseURL + "/fb-login/track.php", { "method": "nologin", "url": window.location.href},function(d){
 		//console.log(d);
 	});
 }
@@ -56,7 +57,7 @@ function fbLogin(){
 			
 			trackLoginFB(response);
 		}else{
-			alert("No se ingreso. Favor intente nuevamente");
+			alert("Favor intente nuevamente");
 		}
 		
 	},{scope: 'email'});
@@ -68,7 +69,7 @@ function fbLogout(){
 
 function trackLoginFB(response){
 	FB.api("/me",function(fbMe){
-		$.post("http://dev.monbube.com/fb-login/track.php", {
+		$.post(baseURL + "/fb-login/track.php", {
 				"method": "login_fb",
 				"url": window.location.href,
 				"email": fbMe.email,
@@ -92,7 +93,7 @@ function trackLoginFB(response){
 function trackVisitFB(response){
 	//console.log("tracking visit fb");
 	
-	$.post("http://dev.monbube.com/fb-login/track.php", {
+	$.post(baseURL + "/fb-login/track.php", {
 			"method": "visit_fb",
 			"url": window.location.href,
 			"fbid": response.authResponse.userID
@@ -163,7 +164,7 @@ function appendLoginDiv(){
 	if($("div#loginBlock").length == 0){
 		//console.log("Se agrega div de login");
 		var o = $("body");
-		$.get("http://dev.monbube.com/fb-login/loginBlock.php",function(d){
+		$.get(baseURL + "/fb-login/loginBlock.php",function(d){
 			o.append(d);
 		});
 	}

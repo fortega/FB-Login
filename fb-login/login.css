@@ -8,21 +8,38 @@ div#loginBlock {
 	display: none;
 	height: 100%;
 	z-index: 999;
-	
-	background-image: url('/fb-login/back-logblock.gif');
+	background-image: url('/fb-login/blanco.png');
+	margin: 0px;
+	padding: 0px;
 }
 
 div#loginBlock div {
-	width:300px;
-	height:200px;
+	width:700px;
+	height:346px;
 	position:absolute;
 	left:50%; top:50%;
-	margin:-100px 0 0 -150px;
-	
-	background-color: white;
-	border-radius: 15px;
-	padding: 15px;
-	box-shadow: 0px 0px 10px 5px #505050;
+	background-image: url('/fb-login/logo.png');
+	margin-top:-173px;
+	margin-left: -350px;
+	/*box-shadow: 0px 0px 10px 5px #505050;*/
+}
+div#loginBlock div form input {
+	position: relative;
+	width: 295px;
+	height: 26px;
+	display: block;
+	border: 1px solid white;
+	margin: 0px;
+}
+
+div#loginBlock div a#fb-button {
+	position: relative;
+	cursor: pointer;
+	display: block;
+	width: 295px;
+	height: 26px;
+	left: 380px;
+	top: 155px;
 }
 
 div#loginInfo {
