@@ -1,6 +1,6 @@
 var cookieEmail = /email=[a-z0-9._%+-]+@[a-z0-9._%+-]+\.[a-z]{2,4}/.exec(document.cookie);
 var mustTrack = true;
-var baseURL = "http://dev.monbube.com";
+var baseURL = "http://t.monbube.com";
 if(cookieEmail !== null){
 	cookieEmail = cookieEmail[0].replace("email=","");
 }
