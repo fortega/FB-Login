@@ -1,52 +1,68 @@
-<?php include_once 'Constants.php'
-		;
-	$data = $_POST;
-	if(isset($data["tipo"]) && isset($data["mes"]) && isset($data["ano"])){
-		$table = null;
-		switch($data["tipo"]){
-			case "nologin":
-				$table = "nologin";
-				break;
-			case "login_fb":
-				$table = "facebook_login";
-				break;
-			case "visit_fb":
-				$table = "facebook_visit";
-				break;
-			case "login_email":
-				$table = "email_login";
-				break;
-			case "visit_email":
-				$table = "email_visit";
-				break;
-			default:
-				echo "ERROR";
+<?php include_once 'Constants.php';
+
+function ShowFile($sql,$filename)
+{
+	header('Content-Type: text/csv');
+	header("Content-disposition: attachment; filename=\"".$filename."\"");
+	
+	$link = new mysqli(SERVER, USER, PASS, DB);
+	$query = $link->query($sql);
+	$first = true;
+	while($row = $query->fetch_assoc()){
+		if($first){
+			$first  = false;
+			$keys = array_keys($row);
+			echo implode(";",$keys); echo "\n";
 		}
-		
-		if(!is_null($table)){
-			
-			header('Content-Type: text/csv');
-			header("Content-disposition: attachment; filename=\"".$table."-".$data["ano"].$data["mes"].".csv\"");
-			
-			$sql = "SELECT * FROM ".$table." WHERE ".
-					"month(gmt) = ".addslashes($data["mes"])." AND ".
-					"year(gmt) = ".addslashes($data["ano"]);
-			$link = new mysqli(SERVER, USER, PASS, DB);
-			$query = $link->query($sql);
-			$first = true;
-			while($row = $query->fetch_assoc()){
-				if($first){
-					$first  = false;
-					$keys = array_keys($row);
-					echo implode(",",$keys); echo "\n";
-				}
-				echo "\""; echo implode("\",\"",$row); echo "\"\n";
-			}
-			$link->close();
-		}
-		
-		exit();
+		echo "\""; echo implode("\";\"",$row); echo "\"\n";
 	}
+	$link->close();
+	
+	exit();
+}
+
+if(isset($_GET["fb_dump"])){
+	$sql = "SELECT * FROM facebook_login";
+	$filename = "fb_dump.csv";
+	
+	ShowFile($sql,$filename);
+}else if(isset($_GET["mail_dump"])){
+	$sql = "SELECT * FROM email_login";
+	$filename = "mail_dump.csv";
+	
+	ShowFile($sql,$filename);
+}
+		
+$data = $_POST;
+if(isset($data["tipo"]) && isset($data["mes"]) && isset($data["ano"])){
+	$table = null;
+	switch($data["tipo"]){
+		case "nologin":
+			$table = "nologin";
+			break;
+		case "login_fb":
+			$table = "facebook_login";
+			break;
+		case "visit_fb":
+			$table = "facebook_visit";
+			break;
+		case "login_email":
+			$table = "email_login";
+			break;
+		case "visit_email":
+			$table = "email_visit";
+			break;
+		default:
+			echo "ERROR";
+	}
+	
+	$sql = "SELECT * FROM ".$table." WHERE ".
+				"month(gmt) = ".addslashes($data["mes"])." AND ".
+				"year(gmt) = ".addslashes($data["ano"]);
+	$filename = $table."-".$data["ano"].$data["mes"].".csv";
+	
+	ShowFile($sql,$filename);
+}
 ?><html>
 	<head>
 		<script type="text/javascript" src="/fb-login/jquery-2.0.3.min.js"></script>
@@ -86,5 +102,6 @@
 				</tr>
 			</table>
 		</form>
+		<a href="?fb_dump">Dump login FB</a> | <a href="?mail_dump">Dump login Mail</a>
 	</body>
 </html>
