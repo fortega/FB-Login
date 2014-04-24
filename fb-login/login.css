@@ -47,10 +47,18 @@ div#loginBlock div form input {
 }
 @media (min-width: 700px){
 	div#loginBlock div form input#tbNombre {
-		left: 30px; top: 152px;
+		left: 30px; top: 130px;
 	}
 	div#loginBlock div form input#tbEmail{
-		left: 30px; top: 182px;
+		left: 30px; top: 160px;
+	}
+	div#loginBlock div form input#btnIngresar{
+		top: 170px;
+		left: 208px;
+		width: 125px;
+		background-color: #ddc1cb;
+		border: 2px solid #275b71;
+		border-radius: 5px;
 	}
 	div#loginBlock div a#fb-button {
 		position: relative;
@@ -64,10 +72,18 @@ div#loginBlock div form input {
 }
 @media (max-width: 700px){
 	div#loginBlock div form input#tbNombre {
-		left: 30px; top: 133px;
+		left: 30px; top: 116px;
 	}
 	div#loginBlock div form input#tbEmail{
-		left: 30px; top: 163px;
+		left: 30px; top: 146px;
+	}
+	div#loginBlock div form input#btnIngresar{
+		top: 158px;
+		left: 208px;
+		width: 125px;
+		background-color: #ddc1cb;
+		border: 2px solid #275b71;
+		border-radius: 5px;
 	}
 	div#loginBlock div a#fb-button {
 		position: relative;

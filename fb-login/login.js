@@ -12,7 +12,7 @@ function setMail(){
 	var textNombre = $("input#tbNombre").val();
 	if(/[a-z0-9._%+-]+@[a-z0-9._%+-]+\.[a-z]{2,4}/.test(textMail)){
 		document.cookie = "email=" + textMail;
-		trackLoginEmail(textMail);
+		trackLoginEmail(textMail,textNombre);
 		return false;
 	}else{
 		alert("Email ingresado es invalido");
@@ -22,12 +22,13 @@ function setMail(){
 
 function removeMail(){
 	document.cookie = "email=0;expires=Thu, 01 Jan 1970 00:00:01 GMT";
+	document.cookie = "nombre=0;expires=Thu, 01 Jan 1970 00:00:01 GMT";
 	window.location.reload();
 }
 
-function trackLoginEmail(cur_email){
+function trackLoginEmail(cur_email,cur_nombre){
 	//console.log("tracking login email");
-	$.post(baseURL + "/fb-login/track.php", { "method": "login_email", "url": window.location.href, "email": cur_email },function(d){
+	$.post(baseURL + "/fb-login/track.php", { "method": "login_email", "url": window.location.href, "email": cur_email, "nombre": cur_nombre },function(d){
 		//console.log(d);
 		window.location.reload();
 	});

@@ -23,12 +23,13 @@
 						"'".substr(addslashes($data["url"]),0,256)."')";
 					break;
 			case "login_email":
-				$sql ="INSERT INTO email_login (gmt,agent,ip,url,email) VALUE (".
+				$sql ="INSERT INTO email_login (gmt,agent,ip,url,email,nombre) VALUE (".
 						"current_timestamp,".
 						"'".substr(addslashes($_SERVER['HTTP_USER_AGENT']),0,256)."',".
 						"'".addslashes($_SERVER['REMOTE_ADDR'])."',".
 						"'".substr(addslashes($data["url"]),0,256)."',".
-						"'".substr(addslashes($data["email"]),0,254)."')";
+						"'".substr(addslashes($data["email"]),0,254)."',".
+						"'".substr(addslashes($data["nombre"]),0,254)."')";
 				break;
 			case "visit_email":
 				$sql ="INSERT INTO email_visit (gmt,agent,ip,url,email) VALUE (".
